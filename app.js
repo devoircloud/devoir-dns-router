@@ -1,9 +1,21 @@
+/**
+Used boilerplate - https://github.com/oguzhanoya/express-mvc-boilerplate
+
+Detect the IP - https://www.npmjs.com/package/express-ip
+
+Convert IP to Location - https://www.npmjs.com/package/geoip-lite
+
+Wildcard subdomains - https://github.com/patmood/wildcard-subdomains
+*/
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressip = require('express-ip');
+const wildcardSubdomains = require('wildcard-subdomains');
 
 const app = express();
 const debug = require('debug')('myapp:app');
@@ -24,6 +36,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(favicon(path.join(__dirname, 'public', 'favicon/favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressip().getIpInfoMiddleware);
+app.use(wildcardSubdomains({namespace: 'test', whitelist: ['www', 'showip', 'showlocation', 'show-server-id', 'redirect-to-server', 'server'],}));
 
 // bootstrap routes
 require('./app/routes')(app);
