@@ -140,11 +140,14 @@ router.get('/:subdomain/*?', (req, res, next) => {
   	id = 3;
   }
   if (id) {
-  	const params = req.path.substring(req.params.subdomain.length+1); // length + 1, count the slash
-  	console.log(req.params);
-  	console.log("\n\n\n\n\n"+req.params.subdomain+"\n\n\n\n\n\n");
-  	console.log("Server where user should be redirected: "+id);
-  	res.redirect('http://localhost:7001/test/server/'+id+""+params);
+    const params = req.path.substring(req.params.subdomain.length+1); // length + 1, count the slash
+  	// const params = req.path.substring(req.params.subdomain.length); // length + 1, count the slash
+    // console.log(req.params);
+  	// console.log(params);
+  	// console.log("\n\n\n\n\n"+req.params.subdomain+"\n\n\n\n\n\n");
+  	// console.log("Server where user should be redirected: "+id);
+    // res.redirect('http://localhost:7001/test/server/'+id+""+params);
+  	res.redirect('http://localhost:7005/'+req.params.subdomain+params);
   }
   else {
   	res.render('index', { title: 'Express' });
